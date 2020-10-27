@@ -576,6 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   konosuba: {fileID: 8678348517529202847, guid: e45b1ecfa3ad1c440ba6b3f775c4f2d7, type: 3}
+  depth: 1
 --- !u!4 &1956719342
 Transform:
   m_ObjectHideFlags: 0
