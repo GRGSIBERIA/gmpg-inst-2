@@ -10,15 +10,18 @@ public class ObstacleScript : MonoBehaviour
     /// ヒットされて怒ったときに変えたい色
     /// </summary>
     [SerializeField]
-    Material angryMaterial;
+    Material lethalMaterial;
 
+    /// <summary>
+    /// 死んだときの声
+    /// </summary>
     [SerializeField]
-    AudioClip[] angryVoices;
+    AudioClip[] lethalVoices;
 
     /// <summary>
     /// 怒りフラグ
     /// </summary>
-    bool isAngry = false;
+    bool islethal = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,17 +38,17 @@ public class ObstacleScript : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // プレイヤーが接触して，なおかつ怒りフラグがオフのとき
-        if (collision.gameObject.name == "Player" && !isAngry)
+        if (collision.gameObject.name == "Player" && !islethal)
         {
             // MeshRendererにMaterialの設定項目がある
             var renderer = GetComponent<MeshRenderer>();
-            renderer.material = angryMaterial;  // 現在表示されている色を怒った色に変える
+            renderer.material = lethalMaterial;  // 現在表示されている色を怒った色に変える
 
             var audio = GetComponent<AudioSource>();
-            audio.clip = angryVoices[Random.Range(0, angryVoices.Length)];
+            audio.clip = lethalVoices[Random.Range(0, lethalVoices.Length)];
             audio.Play();
 
-            isAngry = true;     // 怒りフラグをオンにする
+            islethal = true;     // 怒りフラグをオンにする
         }
     }
 }

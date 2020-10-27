@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018e29de204ab2f41b9f5865bf1a49de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angryMaterial: {fileID: 2100000, guid: 7db4b5e57fd5ed04782009b7c774dc9f, type: 2}
-  angryVoices:
+  lethalMaterial: {fileID: 2100000, guid: 7db4b5e57fd5ed04782009b7c774dc9f, type: 2}
+  lethalVoices:
   - {fileID: 8300000, guid: 939f8fea822a8324fb906947cc4176b5, type: 3}
   - {fileID: 8300000, guid: 7e2a66879c7462c48879d51c27eb1b64, type: 3}
 --- !u!82 &582105801315332007
@@ -143,7 +143,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 939f8fea822a8324fb906947cc4176b5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

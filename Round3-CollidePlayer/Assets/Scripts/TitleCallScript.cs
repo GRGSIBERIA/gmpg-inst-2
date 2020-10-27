@@ -24,6 +24,7 @@ public class TitleCallScript : MonoBehaviour
 
     /// <summary>
     /// フェードアウト中の有無を検出するためのフラグ
+    /// デフォルトはまだフェードアウトが始まってないのでfalse
     /// </summary>
     bool isFadeOut = false;
 
@@ -45,7 +46,7 @@ public class TitleCallScript : MonoBehaviour
         // 内部時間に時間増分を足す
         innerTime += Time.deltaTime;
 
-        // 内部時間がフェードアウト
+        // 内部時間がフェードアウトが始まる時間に到達したら？
         if (innerTime > startFadeOutTime && !isFadeOut)
         {
             isFadeOut = true;   // フェードアウトを開始しよう
@@ -54,7 +55,7 @@ public class TitleCallScript : MonoBehaviour
         else if (isFadeOut)  // isFadeOut == trueと同じ意味
         {
             // 時間増分値の定義
-            const float deltaAlpha = 1f / (3f * 60f);
+            float deltaAlpha = 1f / (fadeOutTime * 60f);
 
             // 少しずつ透明度を減らしていく
             var color = render.color;
