@@ -7,7 +7,7 @@ using UnityEngine;
 public class ObstacleScript : MonoBehaviour
 {
     /// <summary>
-    /// ヒットされて怒ったときに変えたい色
+    /// ヒットされて死んだときに変えたい色
     /// </summary>
     [SerializeField]
     Material lethalMaterial;
@@ -19,7 +19,7 @@ public class ObstacleScript : MonoBehaviour
     AudioClip[] lethalVoices;
 
     /// <summary>
-    /// 怒りフラグ
+    /// 死亡フラグ
     /// </summary>
     bool islethal = false;
 
@@ -37,7 +37,7 @@ public class ObstacleScript : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // プレイヤーが接触して，なおかつ怒りフラグがオフのとき
+        // プレイヤーが接触して，なおかつ死亡フラグがオフのとき
         if (collision.gameObject.name == "Player" && !islethal)
         {
             // MeshRendererにMaterialの設定項目がある
@@ -48,7 +48,7 @@ public class ObstacleScript : MonoBehaviour
             audio.clip = lethalVoices[Random.Range(0, lethalVoices.Length)];
             audio.Play();
 
-            islethal = true;     // 怒りフラグをオンにする
+            islethal = true;     // 死亡フラグをオンにする
         }
     }
 }
