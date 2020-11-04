@@ -23,35 +23,6 @@ public class PlayerDrivenScript : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーを移動させるための手続き
-    /// </summary>
-    void MovePlayer()
-    {
-        Vector3 direction = Vector3.zero;   // 移動方向
-
-        if (Input.GetKey(KeyCode.UpArrow)) 
-        {   // 上ボタン
-            direction += Vector3.forward;
-        }
-        if (Input.GetKey(KeyCode.DownArrow)) 
-        {   // 下ボタン
-            direction += Vector3.back;
-        }
-        if (Input.GetKey(KeyCode.RightArrow)) 
-        {   // 右ボタン
-            direction += Vector3.right;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow)) 
-        {   // 左ボタン
-            direction += Vector3.left;
-        }
-        direction.Normalize();  // 移動方向を正規化する，長さ1のベクトル
-
-        // 移動方向に対して移動量を掛けるだけ
-        transform.position += direction * speed * Time.deltaTime;
-    }
-
-    /// <summary>
     /// 原始的な移動方法
     /// </summary>
     void AtomicMovePlayer()
