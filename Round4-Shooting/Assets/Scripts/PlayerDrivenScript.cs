@@ -52,10 +52,10 @@ public class PlayerDrivenScript : MonoBehaviour
     /// </summary>
     void ShootBullet()
     {
-        // GetKeyDownは押された瞬間を検知する，連打が必要
+        // GetKeyは押し続けると反応する
         if (Input.GetKey(KeyCode.Space)) 
         {   // スペースを押したら弾が出る
-            var bullet = Instantiate(bulletObject);  // 登録されている弾を生成する
+            Instantiate(bulletObject);  // 登録されている弾を生成する
         }
     }
 
