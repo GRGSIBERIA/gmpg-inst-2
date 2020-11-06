@@ -18,6 +18,15 @@ public class PlayerDrivenScript : MonoBehaviour
     {
         var direction = Vector3.zero;
 
-        
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        {
+
+        }
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
+
+        }
+
+        direction.Normalize();
     }
 }
