@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class PlayerDrivenScript : MonoBehaviour
 {
+    /// <summary>
+    /// 移動速度
+    /// </summary>
     [SerializeField]
     float speed = 1f;
 
+    /// <summary>
+    /// マウスの速度
+    /// </summary>
     [SerializeField]
     float mouseSpeed = 1f;
+
+    /// <summary>
+    /// RaycastHitの有効距離
+    /// </summary>
+    [SerializeField]
+    float distance = 1f;
 
     Camera main;
 
@@ -70,11 +82,32 @@ public class PlayerDrivenScript : MonoBehaviour
         main.transform.Rotate(-rotation.y, 0f, 0f);
     }
 
+    void RayCastHitForDoorKnob()
+    {
+        // 画面の中央でレイを飛ばす
+        Ray ray = main.ScreenPointToRay(new Vector2(0.5f, 0.5f));
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, distance))
+        {
+            // 特にぶつかったものはない
+            if (hit.collider == null) return;
+
+            // ドアノブじゃない場合も退場願う
+            if (hit.collider.gameObject.tag != "Knob") return;
+
+            // 確実にドアノブっぽいので，ドアの開閉処理を移譲する
+            var knob = hit.collider.gameObject;
+            knob.GetComponent<DoorOpenScript>().DoorOperation();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         PlayerMovement();
         PlayerRotation();
+        RayCastHitForDoorKnob();
 
         // 現在のマウス位置を過去のマウス位置に入れ替える
         prevMousePosition = Input.mousePosition;
