@@ -12,6 +12,13 @@ public class DoorOpenScript : MonoBehaviour
     [SerializeField]
     AudioClip doorCloseSE;
 
+    /// <summary>
+    /// ドアを締めるときのディレイ
+    /// 効果音に合わせる
+    /// </summary>
+    [SerializeField]
+    float closeDlay;
+
     Animator animationComponent;
 
     AudioSource audioSource;
@@ -25,11 +32,10 @@ public class DoorOpenScript : MonoBehaviour
     void Start()
     {
         animationComponent = this.GetComponent<Animator>();
+        audioSource = this.GetComponent<AudioSource>();
 
         // 自動再生を防ぐための仕組み
         animationComponent.enabled = false;
-
-        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
