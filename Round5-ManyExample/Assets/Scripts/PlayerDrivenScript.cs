@@ -85,7 +85,7 @@ public class PlayerDrivenScript : MonoBehaviour
     void RayCastHitForDoorKnob()
     {
         // 画面の中央でレイを飛ばす
-        Ray ray = main.ScreenPointToRay(new Vector2(0.5f, 0.5f));
+        Ray ray = main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, distance))
@@ -96,10 +96,19 @@ public class PlayerDrivenScript : MonoBehaviour
             // ドアノブじゃない場合も退場願う
             if (hit.collider.gameObject.tag != "Knob") return;
 
+            // スペース・エンターのどちらかのキーが押されない場合はスキップ
+            var isNotKeyDown = !(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space));
+            if (isNotKeyDown) return;
+
+            Debug.Log("Hit");
+
             // 確実にドアノブっぽいので，ドアの開閉処理を移譲する
-            var knob = hit.collider.gameObject;
-            knob.GetComponent<DoorOpenScript>().DoorOperation();
+            // 親オブジェクトにドアの開閉スクリプトがついている
+            var knob = hit.collider.gameObject;;
+            knob.GetComponentInParent<DoorOpenScript>().DoorOperation();
         }
+
+        Debug.DrawRay(ray.origin, ray.direction * distance, Color.yellow);
     }
 
     // Update is called once per frame
