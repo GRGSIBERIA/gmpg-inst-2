@@ -19,20 +19,40 @@ public class ObstacleScript : MonoBehaviour
     AudioClip[] lethalVoices;
 
     /// <summary>
+    /// 死んだときの血しぶき
+    /// </summary>
+    [SerializeField]
+    GameObject emitter;
+
+    /// <summary>
     /// 死亡フラグ
     /// </summary>
     bool islethal = false;
 
+    Transform ts;
+
     // Start is called before the first frame update
     void Start()
     {
-        // 当たり判定だけだから何もしなくていい
+        ts = transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 当たり判定だけだから何もしなくていい
+        if (islethal && ts.childCount == 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    void InstantiateEmitter(Vector3 forward)
+    {
+        // ベクトルを回転させて血しぶきの向きを調整する
+        Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, forward);
+
+        // 生成するときに座標などを指定する
+        Instantiate(emitter, ts.position, rotation, ts);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -44,11 +64,15 @@ public class ObstacleScript : MonoBehaviour
             var renderer = GetComponent<MeshRenderer>();
             renderer.material = lethalMaterial;  // 現在表示されている色を怒った色に変える
 
+            // 音を鳴らす
             var audio = GetComponent<AudioSource>();
             audio.clip = lethalVoices[Random.Range(0, lethalVoices.Length)];
             audio.Play();
 
             islethal = true;     // 死亡フラグをオンにする
+
+            Vector3 direction = (collision.transform.position - ts.position).normalized;
+            InstantiateEmitter(direction);
         }
     }
 }

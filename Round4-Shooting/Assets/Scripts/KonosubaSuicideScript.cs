@@ -13,8 +13,8 @@ public class KonosubaSuicideScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 自分の子供のパーティクルが自滅したら
-        // 自分も自滅するような処理
+        // 自分の子供のすべてのパーティクルが自滅したら
+        // 自分自身も自滅させる
         if (transform.childCount <= 0)
         {
             Destroy(this.gameObject);
