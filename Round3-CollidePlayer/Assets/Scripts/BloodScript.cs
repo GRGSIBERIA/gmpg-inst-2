@@ -13,13 +13,14 @@ public class BloodScript : MonoBehaviour
 
     /// <summary>
     /// 血しぶきの速度 [m/s]
+    /// 加速度を用いる場合は初速度，50 m/sぐらいがちょうどいい
     /// </summary>
     [SerializeField]
     float velocity = 1f;
 
     /// <summary>
     /// 血しぶきの加速度 [m/s^2]
-    /// 減衰なし
+    /// 減衰なしの等加速度運動
     /// </summary>
     [SerializeField]
     float accel = 1f;
@@ -39,11 +40,6 @@ public class BloodScript : MonoBehaviour
     /// LineRendererのキャッシュ変数
     /// </summary>
     LineRenderer line;
-
-    /// <summary>
-    /// 生存時間のカウンタ
-    /// </summary>
-    float lifetimeCounter = 0f;
 
     /// <summary>
     /// 1フレームの時間を固定する，処理落ちは気にしない
@@ -66,8 +62,9 @@ public class BloodScript : MonoBehaviour
     /// </summary>
     void BloodMotion()
     {
-        // 血しぶきを回転させる
-        ts.RotateAround(ts.position, ts.right, angleVelocity);
+        // 血しぶきを回転させる，Unityでは四元数（クォータニオン）を使う場合が多い
+        // ある軸中心に回転した量を掛けている
+        //ts.rotation *= Quaternion.AngleAxis(angleVelocity * dt, transform.right);
 
         // 変位とは，速度に微小時間を掛けたもの
         float displacement = velocity * dt;
@@ -86,33 +83,41 @@ public class BloodScript : MonoBehaviour
         const float g = 9.8f;
 
         // 加速度を速度に変換する
-        velocity = accel * dt;
+        velocity += accel * dt;
 
-        // 変位は速度の時間増分値
-        float displacement = velocity * dt;
+        // 姿勢前向きの変位, 変位は速度と時間の積で求まる
+        Vector3 forward = velocity * dt * ts.forward;
 
-        // 姿勢前向きの変位
-        Vector3 forward = velocity * ts.forward;
+        // 世界下向きの変位，等速直線運動にする
+        Vector3 down = g * (dt) * Vector3.down;
 
-        // 世界下向きの変位
-        // 重力加速度は求めるのにコストがかかるため，
-        // 不定積分を2回やって等速とみなす
-        // v = at
-        // x = vt = 1/2 a t^2
-        Vector3 down = 0.5f * g * (dt * dt) * Vector3.down;
+        // 過去の座標を保存しておく
+        Vector3 prevPosition = ts.position;
 
         // 姿勢正面の動きと世界下向き重力のベクトルを合成して座標に足す
         ts.position += forward + down;
+
+        // 現在の座標と過去の座標から向きを求めて正面にする
+        ts.forward = (ts.position - prevPosition).normalized;
     }
 
     void JudgeSurvivalTime()
     {
         // 生存時間が長くなったら自滅する
-        if (lifetimeCounter < lifetime)
+        if (lifetime < 0f)
         {
             Destroy(this.gameObject);
         }
-        lifetimeCounter += dt;
+        lifetime -= dt;
+    }
+
+    void OnCollisionEnter(Collision other) 
+    {
+        // 床と衝突したら勝手に消す
+        if (other.gameObject.name == "Plane")
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -122,10 +127,11 @@ public class BloodScript : MonoBehaviour
         JudgeSurvivalTime();
 
         // 血しぶきの始点
-        line.SetPosition(0, ts.position);
+        var f = ts.position;
+        line.SetPosition(0, f);
 
         // 血しぶきの運動
-        BloodMotion();
+        BloodAcceleration();
 
         // 血しぶきの終点
         line.SetPosition(1, ts.position);
