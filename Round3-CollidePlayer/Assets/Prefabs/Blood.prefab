@@ -83,7 +83,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.10775757
+        value: 0.49137878
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -146,3 +146,4 @@ MonoBehaviour:
   velocity: 50
   accel: 8
   angleVelocity: 40
+  isMotion: 1

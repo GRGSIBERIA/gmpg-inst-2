@@ -14,16 +14,16 @@ public class BloodEmitterScript : MonoBehaviour
     }
 
     /// <summary>
-    /// パーティクルのPrefab
-    /// </summary>
-    [SerializeField]
-    GameObject particle;
-
-    /// <summary>
     /// 動作方法
     /// </summary>
     [SerializeField]
     ParticleDriveType driveType;
+
+    /// <summary>
+    /// パーティクルのPrefab
+    /// </summary>
+    [SerializeField]
+    GameObject particle;
 
     /// <summary>
     /// 生存時間の幅
@@ -88,11 +88,33 @@ public class BloodEmitterScript : MonoBehaviour
     /// </summary>
     const float dt = 1f / 60f;
 
+    void DidIrekawari(ref Vector2 v, string vname)
+    {
+        const string irekawariText = "の最小値と最大値が入れ替わってるよ!!!";
+        if (v.x > v.y)
+        {
+            Debug.LogError(vname + irekawariText);
+        }
+    }
+
+    /// <summary>
+    /// こういうところにテストコード書くべきではないが，動作不能に陥るよりエラーが出た方がいいだろう
+    /// </summary>
+    void TestMinMaxValues()
+    {
+        DidIrekawari(ref lifetime, "lifetime");
+        DidIrekawari(ref velocity, "velocity");
+        DidIrekawari(ref accel, "accel");
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         // 必要なものをキャッシュする
         ts = transform;
+
+        // 最小値と最大値が入れ替わってないか見る
+        TestMinMaxValues();
 
         // パーティクルをフレームごとに何個生成するか決める
         particlePerFrame = Mathf.RoundToInt(particlePerSec * dt);
@@ -144,7 +166,6 @@ public class BloodEmitterScript : MonoBehaviour
         bs.Lifetime = Random.Range(lifetime.x, lifetime.y);
         bs.Velocity = Random.Range(velocity.x, velocity.y);
         bs.Accel = Random.Range(accel.x, accel.y);
-        bs.AngularVelocity = Random.Range(angularVelocity.x, angularVelocity.y);
     }
 
     /// <summary>

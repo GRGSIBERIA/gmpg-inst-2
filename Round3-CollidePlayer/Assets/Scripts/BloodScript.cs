@@ -26,14 +26,9 @@ public class BloodScript : MonoBehaviour
     float accel = 1f;
 
     /// <summary>
-    /// 血しぶきの回転速度 [deg/s]
-    /// </summary>
-    [SerializeField]
-    float angleVelocity = 36f;
-
-    /// <summary>
     /// 速度を使うフラグ
     /// </summary>
+    [SerializeField]
     bool isMotion = true;
 
     /// <summary>
@@ -64,8 +59,6 @@ public class BloodScript : MonoBehaviour
     public float Velocity { set { velocity = value; }}
 
     public float Accel { set { accel = value; }}
-
-    public float AngularVelocity { set { angleVelocity = value; }}
 
     public bool IsMotion { set { isMotion = value; }}
     //******************************************************************************
@@ -110,10 +103,6 @@ public class BloodScript : MonoBehaviour
     /// </summary>
     void BloodMotion()
     {
-        // 血しぶきを回転させる，Unityでは四元数（クォータニオン）を使う場合が多い
-        // ある軸中心に回転した量を掛けている
-        //ts.rotation *= Quaternion.AngleAxis(angleVelocity * dt, transform.right);
-
         // 変位とは，速度に微小時間を掛けたもの
         float displacement = velocity * dt;
 
