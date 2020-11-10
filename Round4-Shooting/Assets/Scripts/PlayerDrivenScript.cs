@@ -27,24 +27,30 @@ public class PlayerDrivenScript : MonoBehaviour
     /// </summary>
     void AtomicMovePlayer()
     {
-        float moveAcount = speed * Time.deltaTime;
+        Vector3 displacement = Vector3.zero;
         
+        // 変位をキー入力で導く
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.position += new Vector3(0f, 0f, moveAcount);
+            displacement += Vector3.forward;
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.position += new Vector3(0f, 0f, -moveAcount);
+            displacement += Vector3.back;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.position += new Vector3(-moveAcount, 0f, 0f);
+            displacement += Vector3.left;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.position += new Vector3(moveAcount, 0f, 0f);
+            displacement += Vector3.right;
         }
+        displacement.Normalize();   // 変位ベクトルを正規化する
+
+        // 速度に微小時間を掛けて移動距離＝変位を求める
+        // 変位ベクトルに掛けることで移動量が一定になる
+        transform.position += displacement * speed * Time.deltaTime;
     }
 
     /// <summary>
@@ -53,7 +59,7 @@ public class PlayerDrivenScript : MonoBehaviour
     void ShootBullet()
     {
         // GetKeyは押し続けると反応する
-        if (Input.GetKey(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space)) 
         {   // スペースを押したら弾が出る
             Instantiate(bulletObject);  // 登録されている弾を生成する
         }
