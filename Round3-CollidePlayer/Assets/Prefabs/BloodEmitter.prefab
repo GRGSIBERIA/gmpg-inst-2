@@ -43,13 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c271abf320e81d4c93b96ccfbdbf148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle: {fileID: 0}
   driveType: 0
-  lifetime: {x: 0, y: 0}
-  velocity: {x: 0, y: 0}
-  accel: {x: 0, y: 0}
-  angularVelocity: {x: 0, y: 0}
-  emitterLifetime: 0
+  particle: {fileID: 4979565013823614229, guid: 0258aed54d7582247a88668593f30b08, type: 3}
+  lifetime: {x: 1.5, y: 3}
+  velocity: {x: 30, y: 50}
+  accel: {x: 7, y: 10}
+  emitterLifetime: 5
   emitterAngle: 45
   particlePerSec: 600
   particleFluctuationPerFrame: 4

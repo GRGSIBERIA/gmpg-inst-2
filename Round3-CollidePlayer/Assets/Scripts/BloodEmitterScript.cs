@@ -44,16 +44,10 @@ public class BloodEmitterScript : MonoBehaviour
     Vector2 accel = new Vector2(40f, 80f);
 
     /// <summary>
-    /// 角速度の幅
-    /// </summary>
-    [SerializeField]
-    Vector2 angularVelocity = new Vector2(0f, 20f);
-
-    /// <summary>
     /// エミッタの生存時間
     /// </summary>
     [SerializeField, Header("エミッタの設定")]
-    float emitterLifetime;
+    float emitterLifetime = 10f;
 
     /// <summary>
     /// エミッタの生成角度
@@ -145,15 +139,21 @@ public class BloodEmitterScript : MonoBehaviour
     /// </summary>
     void InstantiateParticle()
     {
-        // パーティクルを生成したら，パーティクルに必要なパラメータの設定を行う
-        GameObject p = Instantiate(particle);
-        BloodScript bs = p.GetComponent<BloodScript>();
-        bs.SetTransform(ts);
-        
+        //***************************************************
+        // Instantiateされた直後にはStartが呼び出されないので
+        // Instantiateした直後のGameObjectのアクセスは慎重にやること
+        //***************************************************
+
         // コーン状にアングルを決める
         float angleX = Random.Range(-emitterAngle, emitterAngle);
         float angleY = Random.Range(-emitterAngle, emitterAngle);
-        bs.SetForward(angleX, angleY);
+        Quaternion rotX = Quaternion.AngleAxis(angleX, ts.right);
+        Quaternion rotY = Quaternion.AngleAxis(angleY, ts.up);
+        Quaternion rotation = ts.rotation * rotX * rotY;
+
+        // パーティクルを生成したら，パーティクルに必要なパラメータの設定を行う
+        GameObject p = Instantiate(particle, ts.position, rotation);
+        BloodScript bs = p.GetComponent<BloodScript>();
         
         // モーションの種類を決める
         bs.IsMotion = true;

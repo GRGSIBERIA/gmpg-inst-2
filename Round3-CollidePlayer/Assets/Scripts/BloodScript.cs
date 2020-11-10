@@ -63,30 +63,6 @@ public class BloodScript : MonoBehaviour
     public bool IsMotion { set { isMotion = value; }}
     //******************************************************************************
 
-    /// <summary>
-    /// エミッタの姿勢を転記する
-    /// </summary>
-    /// <param name="emitter">エミッタ</param>
-    public void SetTransform(Transform emitter)
-    {
-        ts.position = emitter.position;
-        ts.rotation = emitter.rotation;
-        ts.localScale = emitter.localScale;
-    }
-
-    /// <summary>
-    /// 回転で前向き姿勢を設定する
-    /// SetTransformを先に呼び出す必要あり
-    /// </summary>
-    /// <param name="angleX"></param>
-    /// <param name="angleY"></param>
-    public void SetForward(float angleX, float angleY)
-    {
-        Quaternion rotX = Quaternion.AngleAxis(angleX, ts.right);
-        Quaternion rotY = Quaternion.AngleAxis(angleY, ts.up);
-        ts.rotation *= rotX * rotY;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -164,8 +140,7 @@ public class BloodScript : MonoBehaviour
         JudgeSurvivalTime();
 
         // 血しぶきの始点
-        var f = ts.position;
-        line.SetPosition(0, f);
+        line.SetPosition(0, ts.position);
 
         // 血しぶきの運動
         if (isMotion)
