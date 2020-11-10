@@ -51,6 +51,49 @@ public class BloodScript : MonoBehaviour
     /// </summary>
     const float dt = 1f / 60f;
 
+    //******************************************************************************
+    // ここから先はプロパティと呼ばれる文法で，メンバ変数に対するアクセス手段を提供する
+    // get と set が両方存在すると勝手に変数が作られることがある
+    // 普段はメンバ変数にアクセスさせる手段を減らすのが良い
+    // この方法は，初期化用の関数が膨大になりそうなケースで有効ではある
+    // 初期化する元(BloodEmitterScript.InstantiateParticle)が存在するパターンで有効な書き方
+    // BloodEmitterScriptでは，**ランダム**に変数を初期化しているので，
+    // このスクリプト中に処理を任せる（委譲）させるべきではない
+    public float Lifetime { set { lifetime = value; }}
+
+    public float Velocity { set { velocity = value; }}
+
+    public float Accel { set { accel = value; }}
+
+    public float AngularVelocity { set { angleVelocity = value; }}
+
+    public bool IsMotion { set { isMotion = value; }}
+    //******************************************************************************
+
+    /// <summary>
+    /// エミッタの姿勢を転記する
+    /// </summary>
+    /// <param name="emitter">エミッタ</param>
+    public void SetTransform(Transform emitter)
+    {
+        ts.position = emitter.position;
+        ts.rotation = emitter.rotation;
+        ts.localScale = emitter.localScale;
+    }
+
+    /// <summary>
+    /// 回転で前向き姿勢を設定する
+    /// SetTransformを先に呼び出す必要あり
+    /// </summary>
+    /// <param name="angleX"></param>
+    /// <param name="angleY"></param>
+    public void SetForward(float angleX, float angleY)
+    {
+        Quaternion rotX = Quaternion.AngleAxis(angleX, ts.right);
+        Quaternion rotY = Quaternion.AngleAxis(angleY, ts.up);
+        ts.rotation *= rotX * rotY;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

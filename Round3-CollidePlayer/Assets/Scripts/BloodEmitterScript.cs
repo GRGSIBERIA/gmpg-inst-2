@@ -79,11 +79,6 @@ public class BloodEmitterScript : MonoBehaviour
     int particleFluctuationPerFrame = 4;
 
     /// <summary>
-    /// Prefabから取得したスクリプト
-    /// </summary>
-    BloodScript bloodScript;
-
-    /// <summary>
     /// Transformのキャッシュ
     /// </summary>
     Transform ts;
@@ -98,7 +93,6 @@ public class BloodEmitterScript : MonoBehaviour
     {
         // 必要なものをキャッシュする
         ts = transform;
-        bloodScript = particle.GetComponent<BloodScript>();
 
         // パーティクルをフレームごとに何個生成するか決める
         particlePerFrame = Mathf.RoundToInt(particlePerSec * dt);
@@ -129,25 +123,28 @@ public class BloodEmitterScript : MonoBehaviour
     /// </summary>
     void InstantiateParticle()
     {
+        // パーティクルを生成したら，パーティクルに必要なパラメータの設定を行う
         GameObject p = Instantiate(particle);
+        BloodScript bs = p.GetComponent<BloodScript>();
+        bs.SetTransform(ts);
         
         // コーン状にアングルを決める
         float angleX = Random.Range(-emitterAngle, emitterAngle);
         float angleY = Random.Range(-emitterAngle, emitterAngle);
+        bs.SetForward(angleX, angleY);
         
         // モーションの種類を決める
-        bool isMotion = true;
+        bs.IsMotion = true;
         if (driveType == ParticleDriveType.Accelaration)
         {
-            isMotion = false;
+            bs.IsMotion = false;
         }
 
-        float pLifetime = Random.Range(lifetime.x, lifetime.y);
-        float pSpeed = Random.Range(velocity.x, velocity.y);
-        float pAccel = Random.Range(accel.x, accel.y);
-        float pAngularVel = Random.Range(angularVelocity.x, angularVelocity.y);
-
-        
+        // 細かい設定をランダムで設定する
+        bs.Lifetime = Random.Range(lifetime.x, lifetime.y);
+        bs.Velocity = Random.Range(velocity.x, velocity.y);
+        bs.Accel = Random.Range(accel.x, accel.y);
+        bs.AngularVelocity = Random.Range(angularVelocity.x, angularVelocity.y);
     }
 
     /// <summary>
@@ -168,7 +165,10 @@ public class BloodEmitterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // パーティクルを大量に生成する
+        EmitParticle();
+
+        // エミッタの生存期間をジャッジする
         JudgeEmitterLife();
-        
     }
 }
