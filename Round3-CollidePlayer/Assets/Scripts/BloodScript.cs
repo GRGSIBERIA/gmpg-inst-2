@@ -41,6 +41,11 @@ public class BloodScript : MonoBehaviour
     LineRenderer line;
 
     /// <summary>
+    /// 生存時間のカウンタ
+    /// </summary>
+    float lifetimeCounter = 0f;
+
+    /// <summary>
     /// 1フレームの時間を固定する，処理落ちは気にしない
     /// </summary>
     const float dt = 1f / 60f;
@@ -77,6 +82,7 @@ public class BloodScript : MonoBehaviour
     void BloodAcceleration()
     {
         // 重力加速度 [m/s^2]
+        // 重力加速度によってあたかも回転したかのように見せかける
         const float g = 9.8f;
 
         // 加速度を速度に変換する
@@ -99,9 +105,22 @@ public class BloodScript : MonoBehaviour
         ts.position += forward + down;
     }
 
+    void JudgeSurvivalTime()
+    {
+        // 生存時間が長くなったら自滅する
+        if (lifetimeCounter < lifetime)
+        {
+            Destroy(this.gameObject);
+        }
+        lifetimeCounter += dt;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        // 生存時間の判定
+        JudgeSurvivalTime();
+
         // 血しぶきの始点
         line.SetPosition(0, ts.position);
 
