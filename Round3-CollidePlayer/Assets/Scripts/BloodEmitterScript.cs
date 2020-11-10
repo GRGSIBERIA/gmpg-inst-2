@@ -135,6 +135,19 @@ public class BloodEmitterScript : MonoBehaviour
     }
 
     /// <summary>
+    /// 回転角をランダムに決めて回転角度を返す
+    /// </summary>
+    /// <returns>回転角，四元数で表される</returns>
+    Quaternion MakeRotationFromRandomAngle()
+    {
+        float angleX = Random.Range(-emitterAngle, emitterAngle);
+        float angleY = Random.Range(-emitterAngle, emitterAngle);
+        Quaternion rotX = Quaternion.AngleAxis(angleX, ts.right);
+        Quaternion rotY = Quaternion.AngleAxis(angleY, ts.up);
+        return ts.rotation * rotX * rotY;
+    }
+
+    /// <summary>
     /// パーティクルの初期化を行う
     /// </summary>
     void InstantiateParticle()
@@ -145,11 +158,7 @@ public class BloodEmitterScript : MonoBehaviour
         //***************************************************
 
         // コーン状にアングルを決める
-        float angleX = Random.Range(-emitterAngle, emitterAngle);
-        float angleY = Random.Range(-emitterAngle, emitterAngle);
-        Quaternion rotX = Quaternion.AngleAxis(angleX, ts.right);
-        Quaternion rotY = Quaternion.AngleAxis(angleY, ts.up);
-        Quaternion rotation = ts.rotation * rotX * rotY;
+        Quaternion rotation = MakeRotationFromRandomAngle();
 
         // パーティクルを生成したら，パーティクルに必要なパラメータの設定を行う
         GameObject p = Instantiate(particle, ts.position, rotation);
