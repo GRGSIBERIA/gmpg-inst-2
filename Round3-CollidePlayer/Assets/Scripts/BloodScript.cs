@@ -32,6 +32,11 @@ public class BloodScript : MonoBehaviour
     float angleVelocity = 36f;
 
     /// <summary>
+    /// 速度を使うフラグ
+    /// </summary>
+    bool isMotion = true;
+
+    /// <summary>
     /// Transformのキャッシュ変数
     /// </summary>
     Transform ts;
@@ -131,7 +136,14 @@ public class BloodScript : MonoBehaviour
         line.SetPosition(0, f);
 
         // 血しぶきの運動
-        BloodAcceleration();
+        if (isMotion)
+        {
+            BloodMotion();
+        }
+        else
+        {
+            BloodAcceleration();
+        }
 
         // 血しぶきの終点
         line.SetPosition(1, ts.position);
