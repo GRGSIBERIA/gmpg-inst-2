@@ -102,7 +102,7 @@ public class BloodScript : MonoBehaviour
         Vector3 forward = velocity * dt * ts.forward;
 
         // 世界下向きの変位，等速直線運動にする
-        Vector3 down = g * (dt) * Vector3.down;
+        Vector3 down = g * dt * Vector3.down;
 
         // 過去の座標を保存しておく
         Vector3 prevPosition = ts.position;

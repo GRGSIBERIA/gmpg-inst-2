@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6674814679203767202}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!114 &6674814679203767200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,9 +46,9 @@ MonoBehaviour:
   driveType: 0
   particle: {fileID: 4979565013823614229, guid: 0258aed54d7582247a88668593f30b08, type: 3}
   lifetime: {x: 1.5, y: 3}
-  velocity: {x: 30, y: 50}
-  accel: {x: 7, y: 10}
+  velocity: {x: 1, y: 100}
+  accel: {x: 7, y: 11}
   emitterLifetime: 5
-  emitterAngle: 45
+  emitterAngle: 60
   particlePerSec: 600
-  particleFluctuationPerFrame: 4
+  particleFluctuationPerFrame: 1
