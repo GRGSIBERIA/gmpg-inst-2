@@ -131,6 +131,7 @@ MonoBehaviour:
   lethalVoices:
   - {fileID: 8300000, guid: 939f8fea822a8324fb906947cc4176b5, type: 3}
   - {fileID: 8300000, guid: 7e2a66879c7462c48879d51c27eb1b64, type: 3}
+  emitter: {fileID: 6674814679203767202, guid: fe75a5cf0d8951045ab1df0a5045e632, type: 3}
 --- !u!82 &582105801315332007
 AudioSource:
   m_ObjectHideFlags: 0
