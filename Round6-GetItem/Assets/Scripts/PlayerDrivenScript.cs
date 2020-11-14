@@ -25,6 +25,8 @@ public class PlayerDrivenScript : MonoBehaviour
     /// </summary>
     Transform ts;
 
+    Rigidbody rb;
+
     /// <summary>
     /// 足場に足が付いているか？
     /// </summary>
@@ -34,6 +36,8 @@ public class PlayerDrivenScript : MonoBehaviour
     void Start()
     {
         ts = transform;
+
+        rb = this.GetComponent<Rigidbody>();
     }
 
     /// <summary>
@@ -72,24 +76,32 @@ public class PlayerDrivenScript : MonoBehaviour
         return direction * moveAccel * Time.deltaTime;
     }
 
-    void PlayerInput()
+    Vector3 CookJumpSpeed()
     {
-        Vector3 moveSpeed = CookMoveSpeed();
-
-        Vector3 gravitySpeed = Vector3.down * 9.8f * Time.deltaTime;
-
         Vector3 jumpSpeed = Vector3.zero;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpSpeed += Vector3.up * initialJampingVelocity;
         }
+        return jumpSpeed;
+    }
 
-        velocity += moveSpeed + jumpSpeed + gravitySpeed;
+    void PlayerInput()
+    {
+        // 移動速度 [m/s]
+        Vector3 moveSpeed = CookMoveSpeed();
+
+        // ジャンプ速度 [m/s]
+        rb.velocity += CookJumpSpeed();
+
+        // 移動速度に加算する
+        velocity += moveSpeed;
     }
 
     void UpdatePosition()
     {
+        // 横方向の動きのみ物理演算を使わずに直接加算する
         ts.position += velocity * Time.deltaTime;
     }
 
