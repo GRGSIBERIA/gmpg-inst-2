@@ -7,6 +7,9 @@ public class ScaffoldScript : MonoBehaviour
     [SerializeField]
     Material usedMaterial;
 
+    [SerializeField]
+    float selfDestructTime = 10f;
+
     /// <summary>
     /// プレイヤーのスクリプトから呼び出したい関数がある
     /// StayStep, ExitStepの2種類
@@ -19,7 +22,20 @@ public class ScaffoldScript : MonoBehaviour
     /// </summary>
     bool isStepped = false;
 
+    /// <summary>
+    /// 親オブジェクトのメッシュのキャッシュ
+    /// </summary>
     MeshRenderer render;
+
+    /// <summary>
+    /// 子オブジェクトのTextMeshコンポーネントのキャッシュ
+    /// </summary>
+    TextMesh text;
+
+    string Get1DigitFloatString()
+    {
+        return string.Format("{0:f1}", selfDestructTime);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +45,26 @@ public class ScaffoldScript : MonoBehaviour
 
         // 親オブジェクトにMeshRendererが存在する
         render = transform.parent.GetComponent<MeshRenderer>();
+
+        // 子オブジェクトにテキストがいる
+        text = transform.GetChild(0).GetComponent<TextMesh>();
+        text.text = Get1DigitFloatString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // すでに足場を利用していたら自爆タイマーを発動する
+        if (isStepped)
+        {
+            selfDestructTime -= Time.deltaTime;
+            text.text = Get1DigitFloatString();
+        }
+
+        if (selfDestructTime < 0f)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     /// <summary>
