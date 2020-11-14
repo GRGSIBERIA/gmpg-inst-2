@@ -6,25 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerDrivenScript))]
 public class PlayerDrivenScript : MonoBehaviour
 {
-    /// <summary>
-    /// 左右の移動速度 [m/s]
-    /// </summary>
-    [SerializeField, Tooltip("移動速度 [m/s]")]
-    float moveSpeed;
-
     [SerializeField, Tooltip("ジャンプしたときの上向き初速 [m/s]")]
-    float jumpingInitialVelocity;
+    float initialJampingVelocity;
 
     /// <summary>
     /// 左右の移動加速度 [m/s^2]
     /// </summary>
     [SerializeField, Tooltip("移動加速度 [m/s^2]")]
     float moveAccel;
-
-    /// <summary>
-    /// 現在の速度 [m/s]
-    /// </summary>
-    Vector3 velocity;
 
     /// <summary>
     /// Transformのキャッシュ
@@ -66,7 +55,7 @@ public class PlayerDrivenScript : MonoBehaviour
         isFooting = false;
     }
 
-    void PlayerInput()
+    Vector3 GetMoveSpeed()
     {
         // 向きベクトル
         Vector3 direction = Vector3.zero;
@@ -76,14 +65,28 @@ public class PlayerDrivenScript : MonoBehaviour
         {
             direction += Vector3.left;
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             direction += Vector3.right;
         }
         direction.Normalize();   // 向きを正規化する，同時押し対策もする
 
+        return direction * moveAccel * Time.deltaTime;
+    }
+
+    void PlayerInput()
+    {
+        Vector3 moveSpeed = GetMoveSpeed();
+
+        Vector3 jumpSpeed = Vector3.zero;     
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpSpeed += Vector3.up * initialJampingVelocity;
+        }
+
         // 左右方向の加速度を足し合わせる
-        rb.velocity = direction * moveAccel * Time.deltaTime;
+        rb.velocity = moveSpeed + jumpSpeed;
     }
 
     // Update is called once per frame
