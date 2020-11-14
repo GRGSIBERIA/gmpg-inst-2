@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ScaffoldScript : MonoBehaviour
 {
+    [SerializeField]
+    Material usedMaterial;
+
     /// <summary>
     /// プレイヤーのスクリプトから呼び出したい関数がある
     /// StayStep, ExitStepの2種類
@@ -16,11 +19,16 @@ public class ScaffoldScript : MonoBehaviour
     /// </summary>
     bool isStepped = false;
 
+    MeshRenderer render;
+
     // Start is called before the first frame update
     void Start()
     {
         // .(ドット)演算子をつなげて書く方法をメソッドチェーンと呼ぶ
         pds = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDrivenScript>();
+
+        // 親オブジェクトにMeshRendererが存在する
+        render = transform.parent.GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -39,6 +47,7 @@ public class ScaffoldScript : MonoBehaviour
         {
             // 使用済みの足場であることを記憶する
             isStepped = true;
+            render.material = usedMaterial;
         }
     }
 
