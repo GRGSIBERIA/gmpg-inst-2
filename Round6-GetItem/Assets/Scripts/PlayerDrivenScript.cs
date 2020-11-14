@@ -10,15 +10,30 @@ public class PlayerDrivenScript : MonoBehaviour
     [SerializeField, Tooltip("移動速度 [m/s]")]
     float moveSpeed;
 
+    [SerializeField, Tooltip("ジャンプしたときの上向き初速 [m/s]")]
+    float jumpingInitialVelocity;
+
     /// <summary>
-    /// 左右の移動加速度
+    /// 左右の移動加速度 [m/s^2]
     /// </summary>
     [SerializeField, Tooltip("移動加速度 [m/s^2]")]
     float moveAccel;
 
+    /// <summary>
+    /// 現在の速度 [m/s]
+    /// </summary>
     Vector3 velocity;
 
+    /// <summary>
+    /// Transformのキャッシュ
+    /// GetComponent<Transform>()を呼び出すのを防ぐ
+    /// </summary>
     Transform ts;
+
+    /// <summary>
+    /// 足場に足が付いているか？
+    /// </summary>
+    bool isFooting = false;
 
     // Start is called before the first frame update
     void Start()
