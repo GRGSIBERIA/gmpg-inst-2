@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerDrivenScript))]
 public class PlayerDrivenScript : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class PlayerDrivenScript : MonoBehaviour
     /// </summary>
     Transform ts;
 
+    /// <summary>
+    /// Rigidbodyのキャッシュ
+    /// </summary>
     Rigidbody rb;
 
     /// <summary>
@@ -57,6 +61,10 @@ public class PlayerDrivenScript : MonoBehaviour
         isFooting = false;
     }
 
+    /// <summary>
+    /// 移動加速度を速度として返す関数
+    /// </summary>
+    /// <returns>移動速度 [m/s]</returns>
     Vector3 CookMoveSpeed()
     {
         // 向きベクトル
@@ -80,7 +88,7 @@ public class PlayerDrivenScript : MonoBehaviour
     {
         Vector3 jumpSpeed = Vector3.zero;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isFooting)
         {
             jumpSpeed += Vector3.up * initialJampingVelocity;
         }
