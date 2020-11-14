@@ -41,6 +41,23 @@ public class PlayerDrivenScript : MonoBehaviour
         ts = transform;
     }
 
+    /// <summary>
+    /// 足場に常駐している間に呼び出される関数
+    /// 戻り地の前にpublicを付けると他のスクリプトから呼び出せるようになる
+    /// </summary>
+    public void StayStep()
+    {
+        isFooting = true;
+    }
+
+    /// <summary>
+    /// 足場から離れたときに呼び出す関数
+    /// </summary>
+    public void ExitStep()
+    {
+        isFooting = false;
+    }
+
     void PlayerInput()
     {
         // 向きベクトル
