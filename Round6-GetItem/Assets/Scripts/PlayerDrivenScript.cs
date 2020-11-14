@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerDrivenScript))]
 public class PlayerDrivenScript : MonoBehaviour
 {
@@ -16,15 +15,15 @@ public class PlayerDrivenScript : MonoBehaviour
     float moveAccel;
 
     /// <summary>
+    /// プレイヤーが持つ速度
+    /// </summary>
+    Vector3 velocity = Vector3.zero;
+
+    /// <summary>
     /// Transformのキャッシュ
     /// GetComponent<Transform>()を呼び出すのを防ぐ
     /// </summary>
     Transform ts;
-
-    /// <summary>
-    /// Rigidbodyのキャッシュ
-    /// </summary>
-    Rigidbody rb;
 
     /// <summary>
     /// 足場に足が付いているか？
@@ -35,7 +34,6 @@ public class PlayerDrivenScript : MonoBehaviour
     void Start()
     {
         ts = transform;
-        rb = this.GetComponent<Rigidbody>();
     }
 
     /// <summary>
@@ -55,7 +53,7 @@ public class PlayerDrivenScript : MonoBehaviour
         isFooting = false;
     }
 
-    Vector3 GetMoveSpeed()
+    Vector3 CookMoveSpeed()
     {
         // 向きベクトル
         Vector3 direction = Vector3.zero;
@@ -76,22 +74,29 @@ public class PlayerDrivenScript : MonoBehaviour
 
     void PlayerInput()
     {
-        Vector3 moveSpeed = GetMoveSpeed();
+        Vector3 moveSpeed = CookMoveSpeed();
 
-        Vector3 jumpSpeed = Vector3.zero;     
+        Vector3 gravitySpeed = Vector3.down * 9.8f * Time.deltaTime;
+
+        Vector3 jumpSpeed = Vector3.zero;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpSpeed += Vector3.up * initialJampingVelocity;
         }
 
-        // 左右方向の加速度を足し合わせる
-        rb.velocity = moveSpeed + jumpSpeed;
+        velocity += moveSpeed + jumpSpeed + gravitySpeed;
+    }
+
+    void UpdatePosition()
+    {
+        ts.position += velocity * Time.deltaTime;
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerInput();
+        UpdatePosition();
     }
 }

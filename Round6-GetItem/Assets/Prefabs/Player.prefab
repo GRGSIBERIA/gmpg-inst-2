@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1104381323703454562}
   - component: {fileID: 6370080117813857464}
   - component: {fileID: 1173964021903051794}
-  - component: {fileID: 7745335073475270624}
   - component: {fileID: -4366287620926350116}
   - component: {fileID: 9045695857678911843}
   m_Layer: 0
@@ -97,24 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1bcdc0376e63848a39fa81bd48dfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialJampingVelocity: 1000
+  initialJampingVelocity: 10
   moveAccel: 100
---- !u!54 &7745335073475270624
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7973812499699584560}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!135 &-4366287620926350116
 SphereCollider:
   m_ObjectHideFlags: 0
