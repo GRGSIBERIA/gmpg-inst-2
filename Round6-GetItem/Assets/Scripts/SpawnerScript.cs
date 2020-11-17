@@ -32,7 +32,7 @@ public class DifficultyLevel
     /// ステップの色
     /// </summary>
     [SerializeField]
-    Material _colorMaterial;
+    GameObject _step;
 
     //******************************************************
     /// プロパティの宣言, プロパティとは取得(get)，設定(set)用の関数の別名
@@ -46,19 +46,23 @@ public class DifficultyLevel
 
     public int Point { get { return _point; }}
 
-    public Material ColorMaterial { get { return _colorMaterial; }}
+    public GameObject Step { get { return _step; }}
     //******************************************************
 
     /// <summary>
     /// クラス名の関数はコンストラクタとして扱われる
+    /// コンストラクタはnew演算子が使用されたときに呼び出される
     /// </summary>
     /// <param name="name">難易度の名前</param>
     /// <param name="distance">スポーンされる距離</param>
     /// <param name="point">得点</param>
-    /// <param name="material">色</param>
-    public DifficultyLevel(string name, float distance, int point, Material material)
+    /// <param name="step">レベルに応じた足場のプレハブ</param>
+    public DifficultyLevel(string name, float distance, int point, GameObject step)
     {
-        
+        this._name = name;
+        this._distance = distance;
+        this._point = point;
+        this._step = step;
     }
 }
 
@@ -102,16 +106,8 @@ public class SpawnerScript : MonoBehaviour
         // PlayerのTransformをキャッシュしておく
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        // 誰も何も設定していなかった事故が発生！
-        if (levels.Length <= 0)
-        {
-            levels = new DifficultyLevel[] {  // 配列はnewで初期化しなければならない
-                new DifficultyLevel(    // new でコンストラクタ呼び出し
-                    "Normal", 10f, 1,   // 距離と得点の順番
-                    new Material(Shader.Find("Standard")) // 標準シェーダを探してマテリアルに貼り付ける
-                )
-            };  // ネスト(入れ子)が深くなる初期化はこのようにインデントを使って読みやすく工夫する
-        }
+        // levelsに誰も何も設定していなかった事故が発生！
+        Debug.Assert(levels.Length <= 0 || levels == null, "levelsに何も設定されていません！");
     }
 
     // Update is called once per frame
@@ -126,6 +122,10 @@ public class SpawnerScript : MonoBehaviour
     /// </summary>
     void Spawn()
     {
-        
+        // 各レベルの足場を1個ずつ作成する
+        for (int levelId = 0; levelId < levels.Length; ++levelId)
+        {
+
+        }
     }
 }
