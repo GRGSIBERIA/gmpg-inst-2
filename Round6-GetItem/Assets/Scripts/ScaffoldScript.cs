@@ -91,6 +91,7 @@ public class ScaffoldScript : MonoBehaviour
             // 足場本体は，Scaffoldの親 = Step
             // Stepを削除するとScaffoldも削除される
             Destroy(ts.parent.gameObject);
+            spawner.Spawn();
         }
     }
 
