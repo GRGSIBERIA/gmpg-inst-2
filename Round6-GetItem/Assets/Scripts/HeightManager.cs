@@ -11,6 +11,11 @@ public class HeightManager : MonoBehaviour
     Transform player;
 
     /// <summary>
+    /// 最大までのぼった高さ，最大登頂高度
+    /// </summary>
+    float maximumHeight;
+
+    /// <summary>
     /// Textコンポーネントのキャッシュ
     /// </summary>
     Text textComponent;
@@ -20,6 +25,9 @@ public class HeightManager : MonoBehaviour
     {
         // メソッドチェーンでキャッシュする
         player = GameObject.FindWithTag("Player").transform;
+
+        // 最大登頂高度を初期化
+        maximumHeight = player.position.y;
 
         // Textコンポーネントのキャッシュ
         // UnityEngine.UIをusingしないと使えないので要注意
@@ -32,7 +40,12 @@ public class HeightManager : MonoBehaviour
         // プレイヤーが死んでいるとエラーが出る
         if (player == null)
         {
-            textComponent.text = "You lose.";
+            // 最大登頂高度を取得する, 桁区切りあり，浮動小数点1桁
+            string endingHeight = maximumHeight.ToString("n1");
+
+            // お前の負け，ここまで登れたよ
+            textComponent.text = "You lose.\nMaximum climbing altitude:\n" + endingHeight;
+
             return;     // ここで処理を止める
         }
 
@@ -42,5 +55,10 @@ public class HeightManager : MonoBehaviour
         // 文字を結合して渡してあげる
         textComponent.text = "Your Height: -50 < " + text;
 
+        // もし，現在の高さがプレイヤーを上回ったら，最大登頂高度をアップデートする
+        if (maximumHeight < player.position.y)
+        {
+            maximumHeight = player.position.y;
+        }
     }
 }
