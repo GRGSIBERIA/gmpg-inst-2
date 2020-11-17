@@ -17,53 +17,52 @@ public class DifficultyLevel
     string _name;
 
     /// <summary>
-    /// プレイヤーとの距離
+    /// 生成される場所の距離
     /// </summary>
     [SerializeField]
     float _distance;
-    
+
     /// <summary>
-    /// 加点スコア
+    /// 踏んだ時の得点
     /// </summary>
     [SerializeField]
     int _point;
 
     /// <summary>
-    /// ステップの色
+    /// 踏んだGameObject
     /// </summary>
     [SerializeField]
     GameObject _step;
 
-    //******************************************************
-    /// プロパティの宣言, プロパティとは取得(get)，設定(set)用の関数の別名
-    /// _name, _distance, _pointは誰かに書き換えて欲しくない
-    /// しかし，それぞれ取得だけはできて欲しい場合にgetアクセサを使ってプロパティ宣言をすると
-    /// 取得はできるが外部から変更が不可能なプログラムが書ける
-    /// 外部からの変更を禁止することで，バグの発生個所を狭めることができる
+    //*******************************************************
+    // 勝手に内容を弄られると困るものはプロパティ宣言を利用する
+    // 現状ではすべて非公開扱いになっているので外部からデータを取得したい
+    // その場合はプロパティ宣言のうちgetアクセサのみ定義する
+    // アクセサには取得(get)と設定(set)の2種類が存在し，それぞれただの関数になっている
+    /// <summary>
+    /// 難易度の名前
+    /// </summary>
+    /// <value>難易度の名前</value>
     public string Name { get { return _name; }}
 
+    /// <summary>
+    /// プレイヤーから離れて生成される距離
+    /// </summary>
+    /// <value></value>
     public float Distance { get { return _distance; }}
 
+    /// <summary>
+    /// 加算される得点のポイント
+    /// </summary>
+    /// <value>加算されるポイント</value>
     public int Point { get { return _point; }}
 
-    public GameObject Step { get { return _step; }}
-    //******************************************************
-
     /// <summary>
-    /// クラス名の関数はコンストラクタとして扱われる
-    /// コンストラクタはnew演算子が使用されたときに呼び出される
+    /// 生成される足場
     /// </summary>
-    /// <param name="name">難易度の名前</param>
-    /// <param name="distance">スポーンされる距離</param>
-    /// <param name="point">得点</param>
-    /// <param name="step">レベルに応じた足場のプレハブ</param>
-    public DifficultyLevel(string name, float distance, int point, GameObject step)
-    {
-        this._name = name;
-        this._distance = distance;
-        this._point = point;
-        this._step = step;
-    }
+    /// <value>足場のプレハブ</value>
+    public GameObject Step { get { return _step; }}
+    //*******************************************************
 }
 
 /// <summary>
@@ -81,7 +80,8 @@ public class SpawnerScript : MonoBehaviour
     /// 難易度の配列
     /// </summary>
     [SerializeField]
-    DifficultyLevel[] levels;
+    List<DifficultyLevel> levels = new List<DifficultyLevel>();
+    // Unityでは配列[]ではなくList<>を使う
 
     /// <summary>
     /// 得点に対して増えていく度合
@@ -107,7 +107,7 @@ public class SpawnerScript : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         // levelsに誰も何も設定していなかった事故が発生！
-        Debug.Assert(levels.Length <= 0 || levels == null, "levelsに何も設定されていません！");
+        Debug.Assert(levels.Count >= 0 || levels != null, "levelsに何も設定されていません！");
     }
 
     // Update is called once per frame
@@ -120,12 +120,12 @@ public class SpawnerScript : MonoBehaviour
     /// 足場を生成する関数
     /// プレイヤーの位置に応じて適当な場所へ生成する
     /// </summary>
-    void Spawn()
+    public void Spawn() // publicで外部に公開する宣言をする
     {
-        // 各レベルの足場を1個ずつ作成する
-        for (int levelId = 0; levelId < levels.Length; ++levelId)
+        // 1個踏むたびに各レベルの足場を1個ずつ作成する
+        for (int levelId = 0; levelId < levels.Count; ++levelId)
         {
-
+            Instantiate(levels[levelId].Step);
         }
     }
 }
