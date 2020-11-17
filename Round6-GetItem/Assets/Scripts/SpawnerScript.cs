@@ -146,9 +146,15 @@ public class SpawnerScript : MonoBehaviour
             // 長いので一時変数を作る
             DifficultyLevel lv = levels[levelId];
             
-            // プレイヤーの位置からランダム
+            // プレイヤーの位置からランダムに足場を生成する
             Vector3 pos = player.position + RandomizeDistance(lv.Distance);
-            Instantiate(levels[levelId].Step, pos, qzero);
+            GameObject step = Instantiate(levels[levelId].Step, pos, qzero);
+
+            // スクリプト本体を取得する
+            ScaffoldScript ss = step.transform.GetChild(0).GetComponent<ScaffoldScript>();
+
+            // ポイントを設定する
+            ss.Point = lv.Point;
         }
     }
 }

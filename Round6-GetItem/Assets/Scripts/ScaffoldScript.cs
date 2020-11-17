@@ -17,6 +17,36 @@ public class ScaffoldScript : MonoBehaviour
     float selfDestructTime = 10f;
 
     /// <summary>
+    /// 内部的に持っているポイント
+    /// </summary>
+    int _point;
+
+    /// <summary>
+    /// 既にポイントの内容が設定されているかどうか判定する
+    /// </summary>
+    bool isSetPoint = false;
+
+    /// <summary>
+    /// 内部ポイント
+    /// </summary>
+    /// <value>内部ポイント</value>
+    public int Point { 
+        get {
+            return _point;
+        }
+        set {
+            // 既にポイント設定されている場合は，勝手にポイントを上書きできないようにする
+            // 1度だけしか値を設定できない書き方
+            // シングルトンパターンの亜種(Wikipediaで検索してください)
+            if (!isSetPoint)
+            {
+                isSetPoint = true;
+                _point = value;
+            }
+        }
+    }
+
+    /// <summary>
     /// プレイヤーのスクリプトから呼び出したい関数がある
     /// StayStep, ExitStepの2種類
     /// </summary>
