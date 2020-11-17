@@ -46,9 +46,9 @@ MonoBehaviour:
   driveType: 0
   particle: {fileID: 4979565013823614229, guid: 0258aed54d7582247a88668593f30b08, type: 3}
   lifetime: {x: 1.5, y: 3}
-  velocity: {x: 1, y: 100}
+  velocity: {x: 30, y: 50}
   accel: {x: 7, y: 11}
   emitterLifetime: 5
-  emitterAngle: 60
+  emitterAngle: 45
   particlePerSec: 600
-  particleFluctuationPerFrame: 1
+  particleFluctuationPerFrame: 4

@@ -80,6 +80,7 @@ public class BloodScript : MonoBehaviour
     void BloodMotion()
     {
         // 変位とは，速度に微小時間を掛けたもの
+        //velocity *= 0.9f;
         float displacement = velocity * dt;
 
         // 位置を変位の向きを足し合わせることで更新する
@@ -116,7 +117,7 @@ public class BloodScript : MonoBehaviour
 
     void JudgeSurvivalTime()
     {
-        // 生存時間が長くなったら自滅する
+        // 寿命が尽きたら自滅する
         if (lifetime < 0f)
         {
             Destroy(this.gameObject);
