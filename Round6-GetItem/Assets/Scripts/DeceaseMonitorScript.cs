@@ -44,6 +44,9 @@ public class DeceaseMonitorScript : MonoBehaviour
             // プレイヤーの位置にパーティクルを発生させる
             Instantiate(deceaseParticle, player.position, player.rotation);
             Destroy(player.gameObject);
+
+            // 逝去したら関係ないので自分自身を消去する
+            Destroy(this.gameObject);
         }
     }
 }
