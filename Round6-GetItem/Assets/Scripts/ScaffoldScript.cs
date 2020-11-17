@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class ScaffoldScript : MonoBehaviour
 {
+    /// <summary>
+    /// 踏んでしまった足場の色
+    /// </summary>
     [SerializeField]
-    Material usedMaterial;
+    Material steppedMaterial;
 
+    /// <summary>
+    /// 自滅する時間
+    /// </summary>
     [SerializeField]
     float selfDestructTime = 10f;
 
@@ -42,6 +48,10 @@ public class ScaffoldScript : MonoBehaviour
     /// </summary>
     SpawnerScript spawner;
 
+    /// <summary>
+    /// 浮動小数点数が1桁の文字を取得する関数
+    /// </summary>
+    /// <returns>浮動小数点数が1桁の文字列</returns>
     string Get1DigitFloatString()
     {
         return string.Format("{0:f1}", selfDestructTime);
@@ -62,7 +72,7 @@ public class ScaffoldScript : MonoBehaviour
 
         // 子オブジェクトにテキストがいる
         text = transform.GetChild(0).GetComponent<TextMesh>();
-        text.text = Get1DigitFloatString();
+        text.text = Get1DigitFloatString(); // テキストに自分の秒数を入れる
     }
 
     // Update is called once per frame
@@ -71,8 +81,8 @@ public class ScaffoldScript : MonoBehaviour
         // すでに足場を利用していたら自爆タイマーを発動する
         if (isStepped)
         {
-            selfDestructTime -= Time.deltaTime;
-            text.text = Get1DigitFloatString();
+            selfDestructTime -= Time.deltaTime; // タイマーを更新にかかった時間だけ減らす
+            text.text = Get1DigitFloatString(); // 文字の中身を現在の時間に更新する
         }
 
         // 自爆タイマーがゼロ以下になったら足場を消す
@@ -94,7 +104,7 @@ public class ScaffoldScript : MonoBehaviour
         {
             // 使用済みの足場であることを記憶する
             isStepped = true;
-            render.material = usedMaterial;
+            render.material = steppedMaterial;
         }
     }
 
