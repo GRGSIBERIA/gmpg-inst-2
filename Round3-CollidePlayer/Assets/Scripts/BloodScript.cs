@@ -80,6 +80,7 @@ public class BloodScript : MonoBehaviour
     void BloodMotion()
     {
         // 変位とは，速度に微小時間を掛けたもの
+        //velocity *= 0.9f;
         float displacement = velocity * dt;
 
         // 位置を変位の向きを足し合わせることで更新する
@@ -102,7 +103,7 @@ public class BloodScript : MonoBehaviour
         Vector3 forward = velocity * dt * ts.forward;
 
         // 世界下向きの変位，等速直線運動にする
-        Vector3 down = g * (dt) * Vector3.down;
+        Vector3 down = g * dt * Vector3.down;
 
         // 過去の座標を保存しておく
         Vector3 prevPosition = ts.position;

@@ -186,7 +186,7 @@ public class BloodEmitterScript : MonoBehaviour
         int fluctuation = Random.Range(0, particleFluctuationPerFrame);
         int loopCount = particlePerFrame - fluctuation;
 
-        for (int count = 0; count < particlePerFrame; ++count)
+        for (int count = 0; count < loopCount; ++count)
         {
             InstantiateParticle();
         }
