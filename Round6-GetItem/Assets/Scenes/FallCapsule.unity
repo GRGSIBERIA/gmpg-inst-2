@@ -167,7 +167,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStep: {fileID: 2485707987949010270, guid: 515c03e0b5cc3174f8703db3e2b2ce0c, type: 3}
-  levels: []
+  levels:
+  - _name: Easy
+    _distance: 4
+    _point: 1
+    _step: {fileID: 2485707987949010270, guid: 515c03e0b5cc3174f8703db3e2b2ce0c, type: 3}
+  - _name: Normal
+    _distance: 8
+    _point: 2
+    _step: {fileID: 6292938968966853072, guid: 62fa27d0ce85a1d45a9628a104ded0dc, type: 3}
+  - _name: Hard
+    _distance: 16
+    _point: 4
+    _step: {fileID: 3163546539994398672, guid: cf5a9bf02fcfe8e4b8cbe5ced116f0d5, type: 3}
   basis: 2
 --- !u!1 &835012037
 GameObject:
