@@ -13,7 +13,20 @@ public class SpawnerScript : MonoBehaviour
     [SerializeField]
     GameObject baseStep;
 
-    GameObject[] steps;
+    /// <summary>
+    /// 増える数，倍率
+    /// </summary>
+    float magnitude = 1f;
+
+    /// <summary>
+    /// 増える数の変化率
+    /// </summary>
+    float deltaMagnitude = 0.1f;
+
+    /// <summary>
+    /// 増えていく度合
+    /// </summary>
+    float basis = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +40,11 @@ public class SpawnerScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    void Spawn()
     {
         
     }

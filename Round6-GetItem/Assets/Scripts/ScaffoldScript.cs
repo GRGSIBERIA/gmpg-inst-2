@@ -37,6 +37,8 @@ public class ScaffoldScript : MonoBehaviour
     /// </summary>
     Transform ts;
 
+    SpawnerScript spawner;
+
     string Get1DigitFloatString()
     {
         return string.Format("{0:f1}", selfDestructTime);
@@ -50,6 +52,7 @@ public class ScaffoldScript : MonoBehaviour
         // .(ドット)演算子をつなげて書く方法をメソッドチェーンと呼ぶ
         // 戻り値がオブジェクトであればたいていはメソッドチェーンができる
         pds = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDrivenScript>();
+        spawner = GameObject.Find("Spawner").GetComponent<SpawnerScript>();
 
         // 親オブジェクトにMeshRendererが存在する
         render = transform.parent.GetComponent<MeshRenderer>();
