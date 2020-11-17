@@ -7,13 +7,13 @@ using UnityEngine;
 public class PlayerDrivenScript : MonoBehaviour
 {
     [SerializeField, Tooltip("ジャンプしたときの上向き初速 [m/s]")]
-    float initialJampingVelocity;
+    float initialJampingVelocity = 0f;
 
     /// <summary>
     /// 左右の移動加速度 [m/s^2]
     /// </summary>
     [SerializeField, Tooltip("移動加速度 [m/s^2]")]
-    float moveAccel;
+    float moveAccel = 1f;
 
     /// <summary>
     /// プレイヤーが持つ速度
@@ -34,6 +34,7 @@ public class PlayerDrivenScript : MonoBehaviour
     /// <summary>
     /// 足場に足が付いているか？
     /// </summary>
+    [SerializeField]
     bool isFooting = false;
 
     // Start is called before the first frame update
@@ -47,6 +48,9 @@ public class PlayerDrivenScript : MonoBehaviour
     /// <summary>
     /// 足場に常駐している間に呼び出される関数
     /// 戻り地の前にpublicを付けると他のスクリプトから呼び出せるようになる
+    /// publicを付けるということは，他人に公開しても良いという意味になる
+    /// 安易に見知らぬ人に個人情報を提供しないように，安易にすべて公開(public)して良いものではない
+    /// 副作用(公開して使われることで何が変更されるか)を理解しながらプログラミングをしよう
     /// </summary>
     public void StayStep()
     {
@@ -67,32 +71,40 @@ public class PlayerDrivenScript : MonoBehaviour
     /// <returns>移動速度 [m/s]</returns>
     Vector3 CookMoveSpeed()
     {
-        // 向きベクトル
+        // 向きベクトル，計算はまだだからzeroを代入してよい
         Vector3 direction = Vector3.zero;
 
         // プレイヤーのキー入力に応じて向きを変える
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))    // 左キーの入力があった
         {
-            direction += Vector3.left;
+            direction += Vector3.left;          // 単位ベクトルの左成分を向きに足す
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))   // 右キーの入力があった
         {
-            direction += Vector3.right;
+            direction += Vector3.right;         // 単位ベクトルの右成分を向きに足す
         }
-        direction.Normalize();   // 向きを正規化する，同時押し対策もする
+        direction.Normalize();   // 向きを正規化する，同時押し対策
 
+        // 向きに対して速度を掛けて変位を求める
+        // m/s * s -> m
         return direction * moveAccel * Time.deltaTime;
     }
 
+    /// <summary>
+    /// ジャンプした時の初速をコントロールするための関数
+    /// 空中ジャンプは禁止している
+    /// </summary>
+    /// <returns>ジャンプしたときの初速</returns>
     Vector3 CookJumpSpeed()
     {
         Vector3 jumpSpeed = Vector3.zero;
 
+        // スペースかつ足場に立っているならば，初速を強制的に与える
         if (Input.GetKeyDown(KeyCode.Space) && isFooting)
         {
             jumpSpeed += Vector3.up * initialJampingVelocity;
         }
-        return jumpSpeed;
+        return jumpSpeed;   // 初速
     }
 
     void PlayerInput()

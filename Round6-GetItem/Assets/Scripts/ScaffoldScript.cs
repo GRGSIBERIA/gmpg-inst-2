@@ -37,6 +37,9 @@ public class ScaffoldScript : MonoBehaviour
     /// </summary>
     Transform ts;
 
+    /// <summary>
+    /// 自分自身が削除されたらspawnerに知らせたい
+    /// </summary>
     SpawnerScript spawner;
 
     string Get1DigitFloatString()
@@ -72,8 +75,11 @@ public class ScaffoldScript : MonoBehaviour
             text.text = Get1DigitFloatString();
         }
 
+        // 自爆タイマーがゼロ以下になったら足場を消す
         if (selfDestructTime < 0f)
         {
+            // 足場本体は，Scaffoldの親 = Step
+            // Stepを削除するとScaffoldも削除される
             Destroy(ts.parent.gameObject);
         }
     }
@@ -99,8 +105,11 @@ public class ScaffoldScript : MonoBehaviour
     /// <param name="other">当たり判定の対象</param>
     void OnTriggerStay(Collider other)
     {
+        // NOTE:
         // other.gameObject.tag == "Player" とするよりも
         // other.CompareTag("Player")を使ったほうがとても速い
+
+        // プレイヤーが当たり判定の場所に入ってきたら
         if (other.CompareTag("Player"))
         {
             // 足場に引っかかっている
@@ -114,6 +123,7 @@ public class ScaffoldScript : MonoBehaviour
     /// <param name="other">当たり判定の対象</param>
     void OnTriggerExit(Collider other)
     {
+        // プレイヤーが当たり判定の場所から出たら
         if (other.CompareTag("Player"))
         {
             // 足場から離れた
