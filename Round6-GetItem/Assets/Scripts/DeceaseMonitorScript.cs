@@ -7,11 +7,15 @@ using UnityEngine;
 /// </summary>
 public class DeceaseMonitorScript : MonoBehaviour
 {
+    /// <summary>
+    /// プレイヤーの姿勢をキャッシュする
+    /// </summary>
     Transform player;
 
     // Start is called before the first frame update
     void Start()
     {
+        // タグからプレイヤーを呼び出す
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 

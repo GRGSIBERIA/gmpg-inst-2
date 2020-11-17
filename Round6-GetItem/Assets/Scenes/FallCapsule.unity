@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 504622796}
   m_Layer: 0
   m_Name: Spawner
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStep: {fileID: 2485707987949010270, guid: 515c03e0b5cc3174f8703db3e2b2ce0c, type: 3}
+  basis: 2
 --- !u!1001 &664318507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -294,7 +295,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Your Height: 0 > -50'
+  m_Text: 'Your Height: -50 < '
 --- !u!222 &835012040
 CanvasRenderer:
   m_ObjectHideFlags: 0
