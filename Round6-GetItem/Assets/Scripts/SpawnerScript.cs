@@ -94,14 +94,22 @@ public class SpawnerScript : MonoBehaviour
     /// </summary>
     Transform player;
 
+    /// <summary>
+    /// RotationがX:0, Y:0, Z:0のクォータニオンを返す
+    /// これもキャッシュ変数
+    /// </summary>
+    /// <returns>オイラー角が全部ゼロのクォータニオンを返す</returns>
+    Quaternion qzero = new Quaternion(0f, 0f, 0f, 0f);
+
     // Start is called before the first frame update
     void Start()
     {
         // ゲームスタート時に最初の足場を生成する
+        // 長くなりそうなときは途中で切ってもいい
         GameObject firstStep = Instantiate(     // GameObjectをHierarchyに生成
             baseStep,                           // 元になるPrefab
             new Vector3(0f, -1.5f, 0f),         // オブジェクトの位置
-            new Quaternion(0f, 0f, 0f, 0f));    // オブジェクトの向き
+            qzero);                             // オブジェクトの向き
 
         // PlayerのTransformをキャッシュしておく
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -117,6 +125,16 @@ public class SpawnerScript : MonoBehaviour
     }
 
     /// <summary>
+    /// -360～360の間でランダムに向きを生成する関数
+    /// </summary>
+    /// <returns>ランダムな向き</returns>
+    Vector3 RandomizeDistance(float distance)
+    {
+        Quaternion rotation = Quaternion.AngleAxis(Random.Range(-360f, 360f), Vector3.forward);
+        return rotation * Vector3.up * distance;
+    }
+
+    /// <summary>
     /// 足場を生成する関数
     /// プレイヤーの位置に応じて適当な場所へ生成する
     /// </summary>
@@ -125,7 +143,12 @@ public class SpawnerScript : MonoBehaviour
         // 1個踏むたびに各レベルの足場を1個ずつ作成する
         for (int levelId = 0; levelId < levels.Count; ++levelId)
         {
-            Instantiate(levels[levelId].Step);
+            // 長いので一時変数を作る
+            DifficultyLevel lv = levels[levelId];
+            
+            // プレイヤーの位置からランダム
+            Vector3 pos = player.position + RandomizeDistance(lv.Distance);
+            Instantiate(levels[levelId].Step, pos, qzero);
         }
     }
 }

@@ -91,7 +91,6 @@ public class ScaffoldScript : MonoBehaviour
             // 足場本体は，Scaffoldの親 = Step
             // Stepを削除するとScaffoldも削除される
             Destroy(ts.parent.gameObject);
-            spawner.Spawn();
         }
     }
 
@@ -101,11 +100,15 @@ public class ScaffoldScript : MonoBehaviour
     /// <param name="other">当たり判定の対象</param>
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        // 未使用の足場のみ処理を行う
+        if (other.CompareTag("Player") && !isStepped)
         {
             // 使用済みの足場であることを記憶する
             isStepped = true;
             render.material = steppedMaterial;
+
+            // プレイヤーが足場に侵入したら新しい足場を生成する
+            spawner.Spawn();
         }
     }
 
