@@ -216,9 +216,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -104, y: -271}
-  m_SizeDelta: {x: 580, y: 64}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -394, y: -286}
+  m_SizeDelta: {x: 580, y: 200}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &835012039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 4
     m_MaxSize: 42
-    m_Alignment: 3
+    m_Alignment: 6
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 1996228796}
   m_Layer: 5
   m_Name: PointManager
-  m_TagString: Untagged
+  m_TagString: PointManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -601,6 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eca4ec16b5f12349b38b6149719fb7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  multiply: 1
 --- !u!1001 &6761933953490669956
 PrefabInstance:
   m_ObjectHideFlags: 0

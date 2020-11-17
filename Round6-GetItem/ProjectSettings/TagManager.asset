@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Step
   - Spawner
+  - PointManager
   layers:
   - Default
   - TransparentFX
