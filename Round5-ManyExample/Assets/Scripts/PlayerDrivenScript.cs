@@ -27,7 +27,7 @@ public class PlayerDrivenScript : MonoBehaviour
     /// <summary>
     /// 過去のマウス座標の位置
     /// </summary>
-    Vector3 prevMousePosition;
+    Vector2 prevMousePosition;
     
     // Start is called before the first frame update
     void Start()
@@ -36,7 +36,10 @@ public class PlayerDrivenScript : MonoBehaviour
         this.main = Camera.main;
 
         // この行がないとカメラの初期向きが吹っ飛ぶ
-        prevMousePosition = Input.mousePosition;
+        prevMousePosition = Vector2.zero;
+
+        // プレイヤーの回転向きをゼロにする
+        transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
     }
 
     void PlayerMovement()
@@ -71,8 +74,18 @@ public class PlayerDrivenScript : MonoBehaviour
 
     void PlayerRotation()
     {
+        // Input.mousePositionプロパティも使える
+        // ただし，Input.mousePositionプロパティはゲーム画面内の座標を取る
+        // Vector2 rotation = (Input.mousePosition - prevMousePosition) * mouseSpeed * Time.deltaTime;
+
         // 角速度をとりあえず作る
-        var rotation = (Input.mousePosition - prevMousePosition) * mouseSpeed * Time.deltaTime;
+        // GetAxisを使うとコントローラ操作としてマウスを認識する
+        // マウスの移動を変化量として扱う
+        Vector2 mouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        Vector2 rotation = mouse * mouseSpeed * Time.deltaTime;
+
+        // 現在の移動量に過去の移動量を合算する
+        rotation += prevMousePosition;
 
         // マウスのX軸移動はプレイヤーの回転
         transform.Rotate(0f, rotation.x, 0f);
@@ -80,6 +93,9 @@ public class PlayerDrivenScript : MonoBehaviour
         // マウスのY軸移動はカメラの上下の振り向き
         // マウス座標とカメラ座標は違うから +/- を反転する
         main.transform.Rotate(-rotation.y, 0f, 0f);
+
+        // マウス座標を過去のものに入れ替える
+        prevMousePosition = mouse;
     }
 
     void RayCastHitForDoorKnob()
@@ -117,8 +133,5 @@ public class PlayerDrivenScript : MonoBehaviour
         PlayerMovement();
         PlayerRotation();
         RayCastHitForDoorKnob();
-
-        // 現在のマウス位置を過去のマウス位置に入れ替える
-        prevMousePosition = Input.mousePosition;
     }
 }
