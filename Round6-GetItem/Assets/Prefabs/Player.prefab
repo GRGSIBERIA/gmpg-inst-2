@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7093363975916337860}
   - component: {fileID: 672874808690369627}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1bcdc0376e63848a39fa81bd48dfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialJampingVelocity: 8
-  moveAccel: 10
+  initialJampingVelocity: 12
+  moveAccel: 5
   isFooting: 0
 --- !u!54 &7093363975916337860
 Rigidbody:
