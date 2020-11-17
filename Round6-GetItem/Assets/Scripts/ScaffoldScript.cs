@@ -79,6 +79,11 @@ public class ScaffoldScript : MonoBehaviour
     SpawnerScript spawner;
 
     /// <summary>
+    /// ポイント管理のキャッシュ
+    /// </summary>
+    PointManagerScript pointManager;
+
+    /// <summary>
     /// 浮動小数点数が1桁の文字を取得する関数
     /// </summary>
     /// <param name="number">1桁にしたい浮動小数点数</param>
@@ -97,6 +102,9 @@ public class ScaffoldScript : MonoBehaviour
         // 戻り値がオブジェクトであればたいていはメソッドチェーンができる
         pds = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDrivenScript>();
         spawner = GameObject.Find("Spawner").GetComponent<SpawnerScript>();
+
+        // パスを指定してゲームオブジェクトを検索することもできる
+        pointManager = GameObject.Find("Canvas/PointManager").GetComponent<PointManagerScript>();
 
         // 親オブジェクトにMeshRendererが存在する
         render = transform.parent.GetComponent<MeshRenderer>();
@@ -143,6 +151,9 @@ public class ScaffoldScript : MonoBehaviour
 
             // プレイヤーが足場に侵入したら新しい足場を生成する
             spawner.Spawn();
+
+            // ポイントを追加する
+            pointManager.AddPoint(Point);
         }
     }
 
