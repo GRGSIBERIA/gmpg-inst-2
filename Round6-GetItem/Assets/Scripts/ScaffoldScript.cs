@@ -48,6 +48,7 @@ public class ScaffoldScript : MonoBehaviour
         ts = transform;
 
         // .(ドット)演算子をつなげて書く方法をメソッドチェーンと呼ぶ
+        // 戻り値がオブジェクトであればたいていはメソッドチェーンができる
         pds = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDrivenScript>();
 
         // 親オブジェクトにMeshRendererが存在する
