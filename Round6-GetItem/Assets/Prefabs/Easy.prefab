@@ -249,5 +249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9dd3da48cc42c48b98bb6ee53066c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usedMaterial: {fileID: 2100000, guid: 9567eaf415c41de44ab43cbf78e88a29, type: 2}
-  deadTime: 10
+  steppedMaterial: {fileID: 2100000, guid: 9567eaf415c41de44ab43cbf78e88a29, type: 2}
+  unSteppedMaterial: {fileID: 2100000, guid: 65dfb2d124e9def40917e7fb1dab9bfa, type: 2}
+  selfDestructTime: 10
