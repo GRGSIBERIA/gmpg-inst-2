@@ -520,6 +520,7 @@ GameObject:
   - component: {fileID: 1996228793}
   - component: {fileID: 1996228795}
   - component: {fileID: 1996228794}
+  - component: {fileID: 1996228796}
   m_Layer: 5
   m_Name: PointManager
   m_TagString: Untagged
@@ -588,6 +589,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996228792}
   m_CullTransparentMesh: 0
+--- !u!114 &1996228796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996228792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eca4ec16b5f12349b38b6149719fb7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6761933953490669956
 PrefabInstance:
   m_ObjectHideFlags: 0
