@@ -51,10 +51,11 @@ public class ScaffoldScript : MonoBehaviour
     /// <summary>
     /// 浮動小数点数が1桁の文字を取得する関数
     /// </summary>
+    /// <param name="number">1桁にしたい浮動小数点数</param>
     /// <returns>浮動小数点数が1桁の文字列</returns>
-    string Get1DigitFloatString()
+    public static string Get1DigitFloatString(float number)
     {
-        return string.Format("{0:f1}", selfDestructTime);
+        return string.Format("{0:f1}", number);
     }
 
     // Start is called before the first frame update
@@ -72,7 +73,7 @@ public class ScaffoldScript : MonoBehaviour
 
         // 子オブジェクトにテキストがいる
         text = transform.GetChild(0).GetComponent<TextMesh>();
-        text.text = Get1DigitFloatString(); // テキストに自分の秒数を入れる
+        text.text = Get1DigitFloatString(selfDestructTime); // テキストに自分の秒数を入れる
     }
 
     // Update is called once per frame
@@ -81,8 +82,11 @@ public class ScaffoldScript : MonoBehaviour
         // すでに足場を利用していたら自爆タイマーを発動する
         if (isStepped)
         {
-            selfDestructTime -= Time.deltaTime; // タイマーを更新にかかった時間だけ減らす
-            text.text = Get1DigitFloatString(); // 文字の中身を現在の時間に更新する
+            // タイマーを更新にかかった時間だけ減らす
+            selfDestructTime -= Time.deltaTime;
+
+            // 文字の中身を現在の時間に更新する
+            text.text = Get1DigitFloatString(selfDestructTime);
         }
 
         // 自爆タイマーがゼロ以下になったら足場を消す
