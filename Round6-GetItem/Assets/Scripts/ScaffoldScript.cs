@@ -32,6 +32,11 @@ public class ScaffoldScript : MonoBehaviour
     /// </summary>
     TextMesh text;
 
+    /// <summary>
+    /// Transformのキャッシュ
+    /// </summary>
+    Transform ts;
+
     string Get1DigitFloatString()
     {
         return string.Format("{0:f1}", selfDestructTime);
@@ -40,6 +45,8 @@ public class ScaffoldScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ts = transform;
+
         // .(ドット)演算子をつなげて書く方法をメソッドチェーンと呼ぶ
         pds = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDrivenScript>();
 
@@ -63,7 +70,7 @@ public class ScaffoldScript : MonoBehaviour
 
         if (selfDestructTime < 0f)
         {
-            Destroy(this.gameObject);
+            Destroy(ts.parent.gameObject);
         }
     }
 
