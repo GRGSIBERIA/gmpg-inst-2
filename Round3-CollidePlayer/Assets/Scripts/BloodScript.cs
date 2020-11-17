@@ -116,7 +116,7 @@ public class BloodScript : MonoBehaviour
 
     void JudgeSurvivalTime()
     {
-        // 生存時間が長くなったら自滅する
+        // 寿命が尽きたら自滅する
         if (lifetime < 0f)
         {
             Destroy(this.gameObject);
