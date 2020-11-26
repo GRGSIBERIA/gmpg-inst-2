@@ -26,9 +26,6 @@ public class PlayerDrivenScript : MonoBehaviour
     [SerializeField, Tooltip("ジャンプしたときのSE"), Header("効果音関連")]
     List<AudioClip> jumpClips = new List<AudioClip>();
 
-    [SerializeField, Tooltip("ゲームオーバー時の音声")]
-    AudioClip gameOverClip;
-
 
     //*************************************************************
     // ここから先はprivateな変数
@@ -170,13 +167,5 @@ public class PlayerDrivenScript : MonoBehaviour
 
         // プレイヤー入力に応じて位置を更新しよう
         UpdatePosition();
-    }
-
-    /// <summary>
-    /// ゲームオーバーしたときの声を鳴らす
-    /// </summary>
-    public void VoicingDestroyed()
-    {
-        audiosc.PlayOneShot(gameOverClip);
     }
 }

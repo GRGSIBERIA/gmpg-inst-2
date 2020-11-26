@@ -98,13 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1bcdc0376e63848a39fa81bd48dfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialJampingVelocity: 12
+  initialJampingVelocity: 10
   moveAccel: 5
   isFooting: 0
   jumpClips:
   - {fileID: 8300000, guid: dd60e45e6822cec40b58a320a5b074bf, type: 3}
   - {fileID: 8300000, guid: 4a636f399e93d2841ba3e030d0dd36e6, type: 3}
-  gameOverClip: {fileID: 8300000, guid: 6e60fe272644fd04591754b132546f8a, type: 3}
 --- !u!54 &7093363975916337860
 Rigidbody:
   m_ObjectHideFlags: 0
