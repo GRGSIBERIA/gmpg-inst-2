@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 2048533801764148368}
   - component: {fileID: 7087343618152873697}
   m_Layer: 0
-  m_Name: Step
+  m_Name: Easy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,7 +235,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.05, z: 1}
+  m_Size: {x: 0.9, y: 0.05, z: 0.9}
   m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!114 &3377581382857277804
 MonoBehaviour:
@@ -250,5 +250,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steppedMaterial: {fileID: 2100000, guid: 9567eaf415c41de44ab43cbf78e88a29, type: 2}
-  unSteppedMaterial: {fileID: 2100000, guid: 65dfb2d124e9def40917e7fb1dab9bfa, type: 2}
   selfDestructTime: 10
