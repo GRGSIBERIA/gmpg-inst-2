@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1bcdc0376e63848a39fa81bd48dfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialJampingVelocity: 10
+  initialJampingVelocity: 12
   moveAccel: 5
   isFooting: 0
   jumpClips:
@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 6761933954248159327}
   - component: {fileID: 6761933954248159296}
   - component: {fileID: 6761933954248159297}
+  - component: {fileID: 1695606465118250502}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -313,3 +314,15 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6761933954248159298}
   m_Enabled: 1
+--- !u!114 &1695606465118250502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6761933954248159298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999cbb30e9a97734882d74be67a502e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
