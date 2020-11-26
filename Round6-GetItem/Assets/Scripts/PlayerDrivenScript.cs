@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerDrivenScript))]
 public class PlayerDrivenScript : MonoBehaviour
 {
-    [SerializeField, Tooltip("ジャンプしたときの上向き初速 [m/s]")]
+    [SerializeField, Tooltip("ジャンプしたときの上向き初速 [m/s]"), Header("移動関連")]
     float initialJampingVelocity = 0f;
 
     /// <summary>
@@ -14,6 +14,22 @@ public class PlayerDrivenScript : MonoBehaviour
     /// </summary>
     [SerializeField, Tooltip("移動加速度 [m/s^2]")]
     float moveAccel = 1f;
+
+    /// <summary>
+    /// 足場に足が付いているか？
+    /// </summary>
+    [SerializeField]
+    bool isFooting = false;
+
+
+
+    [SerializeField, Tooltip("ジャンプしたときのSE"), Header("効果音関連")]
+    List<AudioClip> jumpClips = new List<AudioClip>();
+
+    [SerializeField, Tooltip("ゲームオーバー時の音声")]
+    AudioClip gameOverClip;
+
+
 
     /// <summary>
     /// プレイヤーが持つ速度
@@ -32,10 +48,9 @@ public class PlayerDrivenScript : MonoBehaviour
     Rigidbody rb;
 
     /// <summary>
-    /// 足場に足が付いているか？
+    /// AudioSourceのキャッシュ
     /// </summary>
-    [SerializeField]
-    bool isFooting = false;
+    AudioSource audio;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +58,8 @@ public class PlayerDrivenScript : MonoBehaviour
         ts = transform;
 
         rb = this.GetComponent<Rigidbody>();
+
+        audio = this.GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -91,6 +108,18 @@ public class PlayerDrivenScript : MonoBehaviour
     }
 
     /// <summary>
+    /// ジャンプの掛け声を鳴らす
+    /// </summary>
+    void VoicingJump()
+    {
+        // ランダムに1つ効果音を選ぶ
+        int index = Random.Range(0, jumpClips.Count);
+
+        // 選んだAudioClipを1つ鳴らす
+        audio.PlayOneShot(jumpClips[index]);
+    }
+
+    /// <summary>
     /// ジャンプした時の初速をコントロールするための関数
     /// 空中ジャンプは禁止している
     /// </summary>
@@ -103,6 +132,7 @@ public class PlayerDrivenScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isFooting)
         {
             jumpSpeed += Vector3.up * initialJampingVelocity;
+            VoicingJump();  // ジャンプしたときの音を出す
         }
         return jumpSpeed;   // 初速
     }
