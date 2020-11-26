@@ -84,6 +84,11 @@ public class ScaffoldScript : MonoBehaviour
     PointManagerScript pointManager;
 
     /// <summary>
+    /// 足場のSE処理のキャッシュ
+    /// </summary>
+    TouchSoundEffectManagerScript touchSEManager;
+
+    /// <summary>
     /// 浮動小数点数が1桁の文字を取得する関数
     /// </summary>
     /// <param name="number">1桁にしたい浮動小数点数</param>
@@ -105,6 +110,7 @@ public class ScaffoldScript : MonoBehaviour
 
         // パスを指定してゲームオブジェクトを検索することもできる
         pointManager = GameObject.Find("Canvas/PointManager").GetComponent<PointManagerScript>();
+        touchSEManager = GameObject.Find("Audio/SEManager").GetComponent<TouchSoundEffectManagerScript>();
 
         // 親オブジェクトにMeshRendererが存在する
         render = transform.parent.GetComponent<MeshRenderer>();
@@ -154,6 +160,9 @@ public class ScaffoldScript : MonoBehaviour
 
             // ポイントを追加する
             pointManager.AddPoint(Point);
+
+            // 足場の効果音を鳴らす
+            touchSEManager.TouchScaffold();
         }
     }
 

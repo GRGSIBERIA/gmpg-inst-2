@@ -109,7 +109,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tap
+  m_Name: Touch
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 6044bd799e43fb242bc65b3868062bb2
   m_Children: []
