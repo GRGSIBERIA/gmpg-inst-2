@@ -18,6 +18,11 @@ public class DeceaseMonitorScript : MonoBehaviour
     /// </summary>
     Transform player;
 
+    /// <summary>
+    /// ゲームセット用の変数
+    /// </summary>
+    bool isGameSet = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +39,9 @@ public class DeceaseMonitorScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // プレイヤーの一定以上の落下を検知したらプレイヤーを死亡させる
-        if (player.position.y < -50f)
+        // プレイヤーの一定以上の落下を検知しつつプレイヤーを死亡させる
+        // ゲームセット判定も同時に行っておく
+        if (player.position.y < -50f && !isGameSet)
         {
             // カメラをプレイヤーと一緒に削除しないようにHierarchyのトップに移動する
             Camera.main.transform.parent = null;
@@ -43,10 +49,16 @@ public class DeceaseMonitorScript : MonoBehaviour
             // プレイヤーを逝去させる
             // プレイヤーの位置にパーティクルを発生させる
             Instantiate(deceaseParticle, player.position, player.rotation);
+
+            // Transformがnullになっているとエラーが出るが，
             Destroy(player.gameObject);
 
-            // 逝去したら関係ないので自分自身を消去する
-            Destroy(this.gameObject);
+            // 死んだときの声を鳴らす
+            GetComponent<AudioSource>().Play();
+
+            // ゲームセットした
+            isGameSet = true;
         }
     }
+    
 }
