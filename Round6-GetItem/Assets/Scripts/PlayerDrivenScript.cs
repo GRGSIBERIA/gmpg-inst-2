@@ -50,7 +50,7 @@ public class PlayerDrivenScript : MonoBehaviour
     /// <summary>
     /// AudioSourceのキャッシュ
     /// </summary>
-    AudioSource audio;
+    AudioSource audiosc;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +59,7 @@ public class PlayerDrivenScript : MonoBehaviour
 
         rb = this.GetComponent<Rigidbody>();
 
-        audio = this.GetComponent<AudioSource>();
+        audiosc = this.GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class PlayerDrivenScript : MonoBehaviour
         int index = Random.Range(0, jumpClips.Count);
 
         // 選んだAudioClipを1つ鳴らす
-        audio.PlayOneShot(jumpClips[index]);
+        audiosc.PlayOneShot(jumpClips[index]);
     }
 
     /// <summary>
@@ -160,5 +160,13 @@ public class PlayerDrivenScript : MonoBehaviour
     {
         PlayerInput();
         UpdatePosition();
+    }
+
+    /// <summary>
+    /// ゲームオーバーしたときの声を
+    /// </summary>
+    public void VoicingDestroyed()
+    {
+        audiosc.PlayOneShot(gameOverClip);
     }
 }
