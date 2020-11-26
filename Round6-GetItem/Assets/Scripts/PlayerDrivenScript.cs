@@ -30,6 +30,11 @@ public class PlayerDrivenScript : MonoBehaviour
     AudioClip gameOverClip;
 
 
+    //*************************************************************
+    // ここから先はprivateな変数
+    // publicなどを付けないと自動的にprivate扱いになる
+    // privateにしておくと変数のプライベートが侵害されない
+    // 変数のプライベートを守っておくとバグったときに責任の所在を明らかにしやすい
 
     /// <summary>
     /// プレイヤーが持つ速度
@@ -51,6 +56,8 @@ public class PlayerDrivenScript : MonoBehaviour
     /// AudioSourceのキャッシュ
     /// </summary>
     AudioSource audiosc;
+
+    //*************************************************************
 
     // Start is called before the first frame update
     void Start()
@@ -158,12 +165,15 @@ public class PlayerDrivenScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // まずはプレイヤーの入力に関する操作を行おう
         PlayerInput();
+
+        // プレイヤー入力に応じて位置を更新しよう
         UpdatePosition();
     }
 
     /// <summary>
-    /// ゲームオーバーしたときの声を
+    /// ゲームオーバーしたときの声を鳴らす
     /// </summary>
     public void VoicingDestroyed()
     {
